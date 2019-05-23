@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.BottomNavigation?>
+<?import com.gluonhq.charm.glisten.control.BottomNavigationButton?>
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="peliculasView" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlpeliculas.PeliculasViewController">
+   <children>
+      <Pane fx:id="panePeliculasView" layoutX="-1.0" layoutY="-2.0" prefHeight="800.0" prefWidth="800.0">
+         <children>
+            <TableView fx:id="tablaPeliculasView" layoutX="12.0" layoutY="137.0" prefHeight="439.0" prefWidth="777.0">
+              <columns>
+                <TableColumn fx:id="tituloView" prefWidth="211.0" text="TITULO" />
+                <TableColumn fx:id="directorView" minWidth="0.0" prefWidth="90.0" text="DIRECTOR" />
+                  <TableColumn fx:id="fecEstrenoView" prefWidth="75.0" text="ESTRENO" />
+                  <TableColumn fx:id="productoraView" prefWidth="96.0" text="PRODUCTORA" />
+                  <TableColumn fx:id="cartelView" prefWidth="78.0" text="CARTEL" />
+                  <TableColumn fx:id="categoriaView" prefWidth="75.0" text="CATEGORIA" />
+                  <TableColumn fx:id="recaudacionView" prefWidth="102.0" text="RECAUDACIÓN" />
+                  <TableColumn fx:id="proyectadaView" prefWidth="75.0" />
+              </columns>
+            </TableView>
+            <Label layoutX="24.0" layoutY="29.0" text="CINE IES MAESTRO FRANCISCO FATOU">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="addPelicula" layoutX="568.0" layoutY="605.0" mnemonicParsing="false" onMouseClicked="#addPeliculaClick" text="NUEVO" />
+            <Button fx:id="editPelicula" layoutX="639.0" layoutY="605.0" mnemonicParsing="false" onMouseClicked="#editPeliculaClick" text="EDITAR" />
+            <Button fx:id="deletePelicula" layoutX="713.0" layoutY="605.0" mnemonicParsing="false" onMouseClicked="#deletePeliculaClick" text="BORRAR" />
+            <TextField fx:id="buscardor" floatText="BUSCA TU PELICULA" layoutX="168.0" layoutY="106.0" prefHeight="36.0" prefWidth="460.0" />
+            <Button fx:id="btnBuscar" layoutX="627.0" layoutY="108.0" mnemonicParsing="false" onMouseClicked="#buscarPeliculaClick" text="BUSCAR" />
+            <Label layoutX="14.0" layoutY="769.0" text="Progrmado &amp; Diseñado por: Tomás Dominguez" />
+            <BottomNavigation layoutX="26.0" layoutY="56.0" prefHeight="36.0" prefWidth="372.0">
+               <actionItems>
+                  <BottomNavigationButton onMouseClicked="#clickPeliculas" selected="true" text="Peliculas" />
+                  <BottomNavigationButton onMouseClicked="#clickCategorias" text="Categorias" />
+                  <BottomNavigationButton onMouseClicked="#clickRegistros" text="Registros" />
+                  <BottomNavigationButton layoutX="10.0" layoutY="10.0" onMouseClicked="#clickAyuda" text="Ayuda" />
+               </actionItems>
+            </BottomNavigation>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
