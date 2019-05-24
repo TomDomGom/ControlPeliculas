@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.BottomNavigation?>
-<?import com.gluonhq.charm.glisten.control.BottomNavigationButton?>
-<?import com.gluonhq.charm.glisten.control.TextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -32,20 +30,15 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="addPelicula" layoutX="568.0" layoutY="605.0" mnemonicParsing="false" onMouseClicked="#addPeliculaClick" text="NUEVO" />
-            <Button fx:id="editPelicula" layoutX="639.0" layoutY="605.0" mnemonicParsing="false" onMouseClicked="#editPeliculaClick" text="EDITAR" />
+            <Button fx:id="addPelicula" layoutX="574.0" layoutY="605.0" mnemonicParsing="false" onMouseClicked="#addPeliculaClick" text="NUEVO" />
+            <Button fx:id="editPelicula" layoutX="643.0" layoutY="605.0" mnemonicParsing="false" onMouseClicked="#editPeliculaClick" text="EDITAR" />
             <Button fx:id="deletePelicula" layoutX="713.0" layoutY="605.0" mnemonicParsing="false" onMouseClicked="#deletePeliculaClick" text="BORRAR" />
-            <TextField fx:id="buscardor" floatText="BUSCA TU PELICULA" layoutX="168.0" layoutY="106.0" prefHeight="36.0" prefWidth="460.0" />
-            <Button fx:id="btnBuscar" layoutX="627.0" layoutY="108.0" mnemonicParsing="false" onMouseClicked="#buscarPeliculaClick" text="BUSCAR" />
+            <Button fx:id="btnBuscar" layoutX="627.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#buscarPeliculaClick" text="BUSCAR" />
             <Label layoutX="14.0" layoutY="769.0" text="Progrmado &amp; Diseñado por: Tomás Dominguez" />
-            <BottomNavigation layoutX="26.0" layoutY="56.0" prefHeight="36.0" prefWidth="372.0">
-               <actionItems>
-                  <BottomNavigationButton onMouseClicked="#clickPeliculas" selected="true" text="Peliculas" />
-                  <BottomNavigationButton onMouseClicked="#clickCategorias" text="Categorias" />
-                  <BottomNavigationButton onMouseClicked="#clickRegistros" text="Registros" />
-                  <BottomNavigationButton layoutX="10.0" layoutY="10.0" onMouseClicked="#clickAyuda" text="Ayuda" />
-               </actionItems>
-            </BottomNavigation>
+            <Button fx:id="btnPeliculasView" layoutX="33.0" layoutY="56.0" mnemonicParsing="false" onMouseClicked="#clickPeliculas" text="PELÍCULAS" />
+            <Button fx:id="btnCategoriasView" layoutX="126.0" layoutY="56.0" mnemonicParsing="false" onMouseClicked="#clickCategorias" text="CATEGORÍAS" />
+            <Button fx:id="btnRegistrosView" layoutX="230.0" layoutY="56.0" mnemonicParsing="false" onMouseClicked="#clickRegistros" text="REGISTROS" />
+            <TextField fx:id="buscador" layoutX="174.0" layoutY="102.0" prefHeight="26.0" prefWidth="446.0" promptText="Busca tu Película" />
          </children>
       </Pane>
    </children>

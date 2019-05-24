@@ -16,13 +16,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.Query;
-
 /**
  * FXML Controller class
  *
@@ -38,7 +39,7 @@ public class PeliculasViewController implements Initializable {
     @FXML
     private Pane panePeliculasView;
     @FXML
-    private TableView<?> tablaPeliculasView;
+    private TableView<Datospeliculas> tablaPeliculasView;
     @FXML
     private TableColumn<Datospeliculas, String> tituloView;
     @FXML
@@ -63,6 +64,14 @@ public class PeliculasViewController implements Initializable {
     private Button deletePelicula;
     @FXML
     private Button btnBuscar;
+    @FXML
+    private Button btnPeliculasView;
+    @FXML
+    private Button btnCategoriasView;
+    @FXML
+    private Button btnRegistrosView;
+    @FXML
+    private TextField buscador;
 
     /**
      * Initializes the controller class.
@@ -72,14 +81,25 @@ public class PeliculasViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        tituloView.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        directorView.setCellValueFactory(new PropertyValueFactory<>("director"));
-        fecEstrenoView.setCellValueFactory(new PropertyValueFactory<>("estreno"));
-        productoraView.setCellValueFactory(new PropertyValueFactory<>("productora"));
-        cartelView.setCellValueFactory(new PropertyValueFactory<>("cartel"));
-        categoriaView.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-        recaudacionView.setCellValueFactory(new PropertyValueFactory<>("recaudacion"));
-        proyectadaView.setCellValueFactory(new PropertyValueFactory<>("proyectada"));
+        tituloView.setCellValueFactory(new PropertyValueFactory<>("TITULO"));
+        directorView.setCellValueFactory(new PropertyValueFactory<>("DIRECTOR"));
+        fecEstrenoView.setCellValueFactory(new PropertyValueFactory<>("FECHAESTRENO"));
+        productoraView.setCellValueFactory(new PropertyValueFactory<>("PRODUCTORA"));
+        cartelView.setCellValueFactory(new PropertyValueFactory<>("CARTEL"));
+        categoriaView.setCellValueFactory(new PropertyValueFactory<>("CATEGORIA"));
+        recaudacionView.setCellValueFactory(new PropertyValueFactory<>("RECAUDACION"));
+        proyectadaView.setCellValueFactory(new PropertyValueFactory<>("PROYECTADA"));
+        
+        tablaPeliculasView.getSelectionModel().selectedItemProperty().addListener(
+        (observable, oldValue, newValue) -> {
+            peliculasSeleccionadas = newValue;
+             if (peliculasSeleccionadas != null) {
+                buscador.setText(peliculasSeleccionadas.getTitulo());
+             }
+             else {
+                 buscador.setText("Pelicula no registrada.");
+             }
+        });
         
     }    
 
@@ -104,9 +124,21 @@ public class PeliculasViewController implements Initializable {
     }
 
     public void cargarPeliculas() {
-    Query queryProductosFindAll = entityManager.createNamedQuery("Datospeliculas.findAll");
-    List<Datospeliculas> listPeliculas = queryProductosFindAll.getResultList();
+    Query queryDatospeliculasFindAll = entityManager.createNamedQuery("Datospeliculas.findAll");
+    List<Datospeliculas> listPeliculas = queryDatospeliculasFindAll.getResultList();
     tablaPeliculasView.setItems(FXCollections.observableArrayList(listPeliculas));
+    }
+
+    @FXML
+    private void clickPeliculas(MouseEvent event) {
+    }
+
+    @FXML
+    private void clickCategorias(MouseEvent event) {
+    }
+
+    @FXML
+    private void clickRegistros(MouseEvent event) {
     }
     
 }
