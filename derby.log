@@ -11,3 +11,6 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=null
 Cargador de clases de base de datos iniciado - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Jun 05 18:56:03 CEST 2019:
+Cerrando la instancia a816c00e-016b-288a-a86d-0000096978e8 en el directorio de base de datos C:\Users\Tomas\Documents\NetBeansProjects\ControlPeliculas\BDPeliculas con cargador de clases sun.misc.Launcher$AppClassLoader@2b193f2d

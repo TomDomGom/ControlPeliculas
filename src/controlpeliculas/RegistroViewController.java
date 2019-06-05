@@ -278,7 +278,6 @@ public class RegistroViewController implements Initializable {
 
     @FXML
     private void clickPeliculas(MouseEvent event) {
-        //        entityManager.refresh(persona);
         entityManager.getTransaction().rollback();
 
         StackPane rootMain = (StackPane) rootTregistroView.getScene().getRoot();
@@ -294,7 +293,6 @@ public class RegistroViewController implements Initializable {
 
     @FXML
     private void clickCancelar(MouseEvent event) {
-    //        entityManager.refresh(persona);
         entityManager.getTransaction().rollback();
 
         StackPane rootMain = (StackPane) rootTregistroView.getScene().getRoot();
