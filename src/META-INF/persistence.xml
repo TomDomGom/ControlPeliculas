@@ -2,10 +2,10 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="ControlPeliculasPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>controlpeliculas.Datoscategoria</class>
-    <class>controlpeliculas.Datospeliculas</class>
+    <class>controlpeliculas.entities.Datoscategoria</class>
+    <class>controlpeliculas.entities.Datospeliculas</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby:C:\Users\Tomas\Documents\NetBeansProjects\ControlPeliculas\BDPeliculas;create=true"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:BDPeliculas;create=true"/>
       <property name="javax.persistence.jdbc.user" value="APP"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.password" value="1234"/>

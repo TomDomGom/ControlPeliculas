@@ -5,24 +5,35 @@
  */
 package controlpeliculas;
 
+import controlpeliculas.entities.Datospeliculas;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.persistence.Query;
 /**
  * FXML Controller class
@@ -33,9 +44,7 @@ public class PeliculasViewController implements Initializable {
 
     private EntityManager entityManager;
     private Datospeliculas peliculasSeleccionadas;
-    
-    @FXML
-    private AnchorPane peliculasView;
+ 
     @FXML
     private Pane panePeliculasView;
     @FXML
@@ -51,7 +60,7 @@ public class PeliculasViewController implements Initializable {
     @FXML
     private TableColumn<Datospeliculas, String> cartelView;
     @FXML
-    private TableColumn<Datospeliculas, Integer> categoriaView;
+    private TableColumn<Datospeliculas, String> categoriaView;
     @FXML
     private TableColumn<Datospeliculas, BigDecimal> recaudacionView;
     @FXML
@@ -65,13 +74,9 @@ public class PeliculasViewController implements Initializable {
     @FXML
     private Button btnBuscar;
     @FXML
-    private Button btnPeliculasView;
-    @FXML
-    private Button btnCategoriasView;
-    @FXML
-    private Button btnRegistrosView;
-    @FXML
     private TextField buscador;
+    @FXML
+    private AnchorPane rootPeliculasView;
 
     /**
      * Initializes the controller class.
@@ -89,7 +94,14 @@ public class PeliculasViewController implements Initializable {
         categoriaView.setCellValueFactory(new PropertyValueFactory<>("CATEGORIA"));
         recaudacionView.setCellValueFactory(new PropertyValueFactory<>("RECAUDACION"));
         proyectadaView.setCellValueFactory(new PropertyValueFactory<>("PROYECTADA"));
-        
+        categoriaView.setCellValueFactory(
+            cellData -> {
+                SimpleStringProperty property = new SimpleStringProperty();
+                if (cellData.getValue().getCategoria()!= null) {
+                    property.setValue(cellData.getValue().getCategoria().getNombre());
+                }
+                return property;
+            });
         tablaPeliculasView.getSelectionModel().selectedItemProperty().addListener(
         (observable, oldValue, newValue) -> {
             peliculasSeleccionadas = newValue;
@@ -99,46 +111,106 @@ public class PeliculasViewController implements Initializable {
              else {
                  buscador.setText("Pelicula no registrada.");
              }
-        });
-        
+        });   
     }    
+    
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+    
+    public void cargarPeliculas() {
+        Query queryDatospeliculasFindAll = entityManager.createNamedQuery("Datospeliculas.findAll");
+        List<Datospeliculas> listPeliculas = queryDatospeliculasFindAll.getResultList();
+        tablaPeliculasView.setItems(FXCollections.observableArrayList(listPeliculas));
+    
+    }
 
     @FXML
     private void addPeliculaClick(MouseEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RegistroView.fxml"));
+            Parent rootRegistroView = fxmlLoader.load();
+            
+            rootPeliculasView.setVisible(false);
+            
+            StackPane rootMain = (StackPane)rootPeliculasView.getScene().getRoot();
+            rootMain.getChildren().add(rootRegistroView);
+            
+            RegistroViewController registroViewController = (RegistroViewController) fxmlLoader.getController();
+            registroViewController.setRootFormViewMain(rootPeliculasView);
+            registroViewController.cargarForm(tablaPeliculasView);
+            
+            peliculasSeleccionadas = new Datospeliculas();
+            registroViewController.setPelicula(entityManager, peliculasSeleccionadas, true);
+            registroViewController.mostrarDatos();
+                //Funciones que cargara para que interactue con la tabla 
+            
+        } catch (IOException ex) {
+            Logger.getLogger(PeliculasViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
     private void editPeliculaClick(MouseEvent event) {
+        if(peliculasSeleccionadas != null) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RegistroView.fxml"));
+                Parent rootDetalleView = fxmlLoader.load();
+                
+                rootPeliculasView.setVisible(false);
+                
+                StackPane rootMain = (StackPane)rootPeliculasView.getScene().getRoot();
+                rootMain.getChildren().add(rootDetalleView);
+                
+                RegistroViewController registroViewController = (RegistroViewController) fxmlLoader.getController();
+                registroViewController.setRootFormViewMain(rootPeliculasView);
+                registroViewController.cargarForm(tablaPeliculasView);
+
+                registroViewController.setPelicula(entityManager, peliculasSeleccionadas, false);
+                registroViewController.mostrarDatos();
+            } catch (IOException ex) {
+                Logger.getLogger(RegistroViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Atención");
+            alert.setHeaderText("Selecciona un registro para editar");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void deletePeliculaClick(MouseEvent event) {
+    if(peliculasSeleccionadas != null) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmar");
+            alert.setHeaderText("¿Desea eliminar la Película?");
+            alert.setContentText(peliculasSeleccionadas.getTitulo()+ " "
+                    + " De: " + peliculasSeleccionadas.getDirector());
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                entityManager.getTransaction().begin();
+                entityManager.remove(peliculasSeleccionadas);
+                entityManager.getTransaction().commit();
+                tablaPeliculasView.getItems().remove(peliculasSeleccionadas);
+                tablaPeliculasView.getFocusModel().focus(null);
+                tablaPeliculasView.requestFocus();
+            } else {
+                int numFilaSeleccionada = tablaPeliculasView.getSelectionModel().getSelectedIndex();
+                tablaPeliculasView.getItems().set(numFilaSeleccionada, peliculasSeleccionadas);
+                TablePosition pos = new TablePosition(tablaPeliculasView, numFilaSeleccionada, null);
+                tablaPeliculasView.getFocusModel().focus(pos);
+                tablaPeliculasView.requestFocus();            
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Atención");
+            alert.setHeaderText("Selecciona un registro para eliminar");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void buscarPeliculaClick(MouseEvent event) {
     }
-
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    public void cargarPeliculas() {
-    Query queryDatospeliculasFindAll = entityManager.createNamedQuery("Datospeliculas.findAll");
-    List<Datospeliculas> listPeliculas = queryDatospeliculasFindAll.getResultList();
-    tablaPeliculasView.setItems(FXCollections.observableArrayList(listPeliculas));
-    }
-
-    @FXML
-    private void clickPeliculas(MouseEvent event) {
-    }
-
-    @FXML
-    private void clickCategorias(MouseEvent event) {
-    }
-
-    @FXML
-    private void clickRegistros(MouseEvent event) {
-    }
-    
 }

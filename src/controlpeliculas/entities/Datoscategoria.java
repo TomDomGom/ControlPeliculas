@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlpeliculas;
+package controlpeliculas.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Datoscategoria.findAll", query = "SELECT d FROM Datoscategoria d")
     , @NamedQuery(name = "Datoscategoria.findById", query = "SELECT d FROM Datoscategoria d WHERE d.id = :id")
+    , @NamedQuery(name = "Datoscategoria.findByCodigo", query = "SELECT d FROM Datoscategoria d WHERE d.codigo = :codigo")
     , @NamedQuery(name = "Datoscategoria.findByNombre", query = "SELECT d FROM Datoscategoria d WHERE d.nombre = :nombre")
     , @NamedQuery(name = "Datoscategoria.findByDescripcion", query = "SELECT d FROM Datoscategoria d WHERE d.descripcion = :descripcion")})
 public class Datoscategoria implements Serializable {
@@ -40,12 +42,14 @@ public class Datoscategoria implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+    @Column(name = "CODIGO")
+    private String codigo;
     @Basic(optional = false)
     @Column(name = "NOMBRE")
     private String nombre;
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    @OneToMany(mappedBy = "categoria")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
     private Collection<Datospeliculas> datospeliculasCollection;
 
     public Datoscategoria() {
@@ -66,6 +70,14 @@ public class Datoscategoria implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getNombre() {
@@ -115,7 +127,7 @@ public class Datoscategoria implements Serializable {
 
     @Override
     public String toString() {
-        return "controlpeliculas.Datoscategoria[ id=" + id + " ]";
+        return "controlpeliculas.entities.Datoscategoria[ id=" + id + " ]";
     }
     
 }

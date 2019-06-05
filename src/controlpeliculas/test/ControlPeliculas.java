@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlpeliculas;
+package controlpeliculas.test;
 
+import controlpeliculas.entities.Datospeliculas;
+import controlpeliculas.entities.Datoscategoria;
 import java.math.BigDecimal;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -41,30 +43,55 @@ public class ControlPeliculas {
         
         // Creamos datos para las categorias.
            Datoscategoria cat0 = new Datoscategoria();
+           cat0.setCodigo("1");
            cat0.setNombre("Documental");
+           
            Datoscategoria cat1 = new Datoscategoria();
+           cat1.setCodigo("2");
            cat1.setNombre("Biográfico");
+           
            Datoscategoria cat2 = new Datoscategoria();
+           cat2.setCodigo("3");
            cat2.setNombre("Histórico");
+           
            Datoscategoria cat3 = new Datoscategoria();
+           cat3.setCodigo("4");
            cat3.setNombre("Musical");
+           
            Datoscategoria cat4 = new Datoscategoria();
+           cat4.setCodigo("5");
            cat4.setNombre("Comedia");
+           
            Datoscategoria cat5 = new Datoscategoria();
+           cat5.setCodigo("6");
            cat5.setNombre("Infantil");
+           
            Datoscategoria cat6 = new Datoscategoria();
+           cat6.setCodigo("7");
            cat6.setNombre("Aventura & Acción");
+           
            Datoscategoria cat7 = new Datoscategoria();
+           cat7.setCodigo("8");
            cat7.setNombre("Bélico");
+           
            Datoscategoria cat8 = new Datoscategoria();
+           cat8.setCodigo("9");
            cat8.setNombre("Ciencia ficción");
+           
            Datoscategoria cat9 = new Datoscategoria();
+           cat9.setCodigo("10");
            cat9.setNombre("Drama");
+           
            Datoscategoria cat10 = new Datoscategoria();
+           cat10.setCodigo("11");
            cat10.setNombre("Suspense");
+           
            Datoscategoria cat11 = new Datoscategoria();
+           cat11.setCodigo("12");
            cat11.setNombre("Terror / Horror");
+           
            Datoscategoria cat12 = new Datoscategoria();
+           cat12.setCodigo("13");
            cat12.setNombre("Porno-erótico");
            
            // Convertimos los datos de fecha. para Así poder generar las fechas sin problema.
@@ -95,6 +122,7 @@ public class ControlPeliculas {
             peli0.setProyectada(Boolean.TRUE);
             peli0.setProductora("Walt Disney");
             peli0.setRecaudacion(peli0Rec);
+            peli0.setCategoria(cat5);
 
             // Pelicula 1
             Datospeliculas peli1 = new Datospeliculas();
@@ -105,6 +133,7 @@ public class ControlPeliculas {
             peli1.setProyectada(Boolean.FALSE);
             peli1.setProductora("Marvel Studio");
             peli1.setRecaudacion(peli1Rec);
+            peli1.setCategoria(cat6);
 
             // Pelicula 2
             Datospeliculas peli2 = new Datospeliculas();
@@ -115,6 +144,7 @@ public class ControlPeliculas {
             peli2.setProductora("Telecinco Cinema");
             peli2.setCalificacion("16");
             peli2.setRecaudacion(peli2Rec);
+            peli2.setCategoria(cat9);
 
             //Vamos a pasar a insertar datos a la base de datos.
             em.getTransaction().begin();
@@ -149,10 +179,7 @@ public class ControlPeliculas {
             } catch (SQLException ex) {
                 
             }
-
-        
-        
-    
+            
     }// Final Main.
     
 } // Final Clase ControlPeliculas.

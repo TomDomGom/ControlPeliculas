@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controlpeliculas;
+package controlpeliculas.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -70,7 +70,7 @@ public class Datospeliculas implements Serializable {
     @Column(name = "PROYECTADA")
     private Boolean proyectada;
     @JoinColumn(name = "CATEGORIA", referencedColumnName = "ID")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Datoscategoria categoria;
 
     public Datospeliculas() {
@@ -188,7 +188,7 @@ public class Datospeliculas implements Serializable {
 
     @Override
     public String toString() {
-        return "controlpeliculas.Datospeliculas[ id=" + id + " ]";
+        return "controlpeliculas.entities.Datospeliculas[ id=" + id + " ]";
     }
     
 }
