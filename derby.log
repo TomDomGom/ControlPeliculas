@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Jun 05 18:48:24 CEST 2019:
- Iniciando instancia a816c00e-016b-288a-a86d-0000096978e8 de Derby, versión The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): 
+Thu Jun 06 08:53:25 CEST 2019:
+ Iniciando instancia a816c00e-016b-2b90-4b39-000009516960 de Derby, versión The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): 
 en el directorio de base de datos C:\Users\Tomas\Documents\NetBeansProjects\ControlPeliculas\BDPeliculas con el cargador de clases sun.misc.Launcher$AppClassLoader@2b193f2d
 Cargado desde file:/C:/Program%20Files/Java/jdk1.8.0_111/db/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -12,5 +12,5 @@ os.version=10.0
 derby.system.home=null
 Cargador de clases de base de datos iniciado - derby.database.classpath=''
 ----------------------------------------------------------------
-Wed Jun 05 18:56:03 CEST 2019:
-Cerrando la instancia a816c00e-016b-288a-a86d-0000096978e8 en el directorio de base de datos C:\Users\Tomas\Documents\NetBeansProjects\ControlPeliculas\BDPeliculas con cargador de clases sun.misc.Launcher$AppClassLoader@2b193f2d
+Thu Jun 06 08:53:54 CEST 2019:
+Cerrando la instancia a816c00e-016b-2b90-4b39-000009516960 en el directorio de base de datos C:\Users\Tomas\Documents\NetBeansProjects\ControlPeliculas\BDPeliculas con cargador de clases sun.misc.Launcher$AppClassLoader@2b193f2d

@@ -86,14 +86,14 @@ public class PeliculasViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        tituloView.setCellValueFactory(new PropertyValueFactory<>("TITULO"));
-        directorView.setCellValueFactory(new PropertyValueFactory<>("DIRECTOR"));
-        fecEstrenoView.setCellValueFactory(new PropertyValueFactory<>("FECHAESTRENO"));
-        productoraView.setCellValueFactory(new PropertyValueFactory<>("PRODUCTORA"));
-        cartelView.setCellValueFactory(new PropertyValueFactory<>("CARTEL"));
-        categoriaView.setCellValueFactory(new PropertyValueFactory<>("CATEGORIA"));
-        recaudacionView.setCellValueFactory(new PropertyValueFactory<>("RECAUDACION"));
-        proyectadaView.setCellValueFactory(new PropertyValueFactory<>("PROYECTADA"));
+        tituloView.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        directorView.setCellValueFactory(new PropertyValueFactory<>("director"));
+        fecEstrenoView.setCellValueFactory(new PropertyValueFactory<>("fechaestreno"));
+        productoraView.setCellValueFactory(new PropertyValueFactory<>("productora"));
+        cartelView.setCellValueFactory(new PropertyValueFactory<>("cartel"));
+        categoriaView.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        recaudacionView.setCellValueFactory(new PropertyValueFactory<>("recaudacion"));
+        proyectadaView.setCellValueFactory(new PropertyValueFactory<>("proyectada"));
         categoriaView.setCellValueFactory(
             cellData -> {
                 SimpleStringProperty property = new SimpleStringProperty();
