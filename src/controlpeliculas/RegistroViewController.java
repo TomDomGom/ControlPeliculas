@@ -168,6 +168,7 @@ public class RegistroViewController implements Initializable {
                 }
             }
         });
+        
         //Formato para el valor mostrado actualmente como seleccionado
         categoriaFormView.setConverter(new StringConverter<Datoscategoria>() {
             @Override
@@ -199,7 +200,7 @@ public class RegistroViewController implements Initializable {
         }
 
     }
-
+     // Evento para añadir el registro en la BD
     @FXML
     private void addPeliculaClick(MouseEvent event) {
             int numFilaSeleccionada;
@@ -215,14 +216,15 @@ public class RegistroViewController implements Initializable {
                 peliculas.setRecaudacion(BigDecimal.valueOf(Double.valueOf(recaudacionFormView.getText()).doubleValue()));
             } catch (NumberFormatException ex) {
                 errorFormato = true;
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Salario no válido");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Recaudación no valida");
                 alert.showAndWait();
                 recaudacionFormView.requestFocus();
             }
         }
-
+        // Detección de chekbox, si esta en true o false, activo o desactivo.
         peliculas.setProyectada(checkFormView.isSelected());
-
+        
+        // Insercción de Fecha con date.
         if (estrenoFormView.getValue() != null) {
             LocalDate localDate = estrenoFormView.getValue();
             ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
@@ -232,15 +234,16 @@ public class RegistroViewController implements Initializable {
         } else {
             peliculas.setFechaestreno(null);
         }
-
+        
+        // Verificación de categoria y selección de la misma
         if (categoriaFormView.getValue() != null) {
             peliculas.setCategoria(categoriaFormView.getValue());
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Debe indicar una provincia");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Selecciona una Categoria.");
             alert.showAndWait();
             errorFormato = true;
         }
-
+        
         if (!errorFormato) {
             try {
                 if (nuevaPelicula) {
@@ -275,7 +278,8 @@ public class RegistroViewController implements Initializable {
             }
         }
     }
-
+    
+    // Evento creado para volver a la tabla de peliculas.
     @FXML
     private void clickPeliculas(MouseEvent event) {
         entityManager.getTransaction().rollback();
@@ -290,7 +294,8 @@ public class RegistroViewController implements Initializable {
         tableViewForm.getFocusModel().focus(pos);
         tableViewForm.requestFocus();
     }
-
+    
+    // Evento para cancelar registro y volver a tabla de peliculas
     @FXML
     private void clickCancelar(MouseEvent event) {
         entityManager.getTransaction().rollback();
@@ -305,15 +310,17 @@ public class RegistroViewController implements Initializable {
         tableViewForm.getFocusModel().focus(pos);
         tableViewForm.requestFocus();
     }
-    
+    /* Creamos los botones de examinar para poder subir el cartel y guardarlo y el de suprimir */
+    // Boton para subir cartel de la pelicula.
     @FXML
     private void onActionButtonExaminar(ActionEvent event) {
      File carpetaFotos = new File(Carteles);
         if (!carpetaFotos.exists()) {
             carpetaFotos.mkdir();
         }
+        //Diremos que tipo de archivos son soportados por nuestra aplicación.
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccionar imagen");
+        fileChooser.setTitle("Selecciona Cartel");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Imágenes (jpg, png)", "*.jpg", "*.png"),
                 new FileChooser.ExtensionFilter("Todos los archivos", "*.*")
@@ -321,35 +328,40 @@ public class RegistroViewController implements Initializable {
         File file = fileChooser.showOpenDialog(rootTregistroView.getScene().getWindow());
         if (file != null) {
             try {
+                // Donde guardaremos el archivo. y como lo añadiremos a la base de datos.
                 Files.copy(file.toPath(), new File(Carteles + "/" + file.getName()).toPath());
                 peliculas.setCartel(file.getName());
                 Image image = new Image(file.toURI().toString());
                 imgCartelView.setImage(image);
             } catch (FileAlreadyExistsException ex) {
+                // Creamos una alerta en el caso de que el cartel ya se encuentre.
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Nombre de archivo duplicado");
                 alert.showAndWait();
             } catch (IOException ex) {
+                // Creamos una alerta en el caso de que no podamos guardar el cartel.
                 Alert alert = new Alert(Alert.AlertType.WARNING, "No se ha podido guardar la imagen");
                 alert.showAndWait();
             }
         }
     }
-    
+    // Evento para eliminar cartel.
     @FXML
     private void onActionSuprimirFoto(ActionEvent event) {
+        //ventana de alerta con botones para eliminar cartel.
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar supresión de imagen");
-        alert.setHeaderText("¿Desea SUPRIMIR el archivo asociado a la imagen, \n"
-                + "quitar la foto pero MANTENER el archivo, \no CANCELAR la operación?");
+        alert.setTitle("ELIMINACIÓN DE CARTEL");
+        alert.setHeaderText("¿Desea ELIMINAR el archivo asociado a la imagen, \n"
+                + "quitar el Cartel pero MANTENER el archivo, \no CANCELAR la operación?");
         alert.setContentText("Elija la opción deseada:");
-
-        ButtonType buttonTypeEliminar = new ButtonType("Suprimir");
+        //Botones de acciones.
+        ButtonType buttonTypeEliminar = new ButtonType("Eliminar");
         ButtonType buttonTypeMantener = new ButtonType("Mantener");
         ButtonType buttonTypeCancel = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(buttonTypeEliminar, buttonTypeMantener, buttonTypeCancel);
 
         Optional<ButtonType> result = alert.showAndWait();
+        //Acción de eliminación de cartel.
         if (result.get() == buttonTypeEliminar) {
             String imageFileName = peliculas.getCartel();
             File file = new File(Carteles + "/" + imageFileName);
@@ -358,7 +370,9 @@ public class RegistroViewController implements Initializable {
             }
             peliculas.setCartel(null);
             imgCartelView.setImage(null);
-        } else if (result.get() == buttonTypeMantener) {
+        } 
+        // Acción cuando damos en mantener.
+        else if (result.get() == buttonTypeMantener) {
             peliculas.setCartel(null);
             imgCartelView.setImage(null);
         }

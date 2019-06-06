@@ -118,13 +118,14 @@ public class PeliculasViewController implements Initializable {
         this.entityManager = entityManager;
     }
     
+    // Creamos el metodo para crear la lista con todos los datos de las peliculas.
     public void cargarPeliculas() {
         Query queryDatospeliculasFindAll = entityManager.createNamedQuery("Datospeliculas.findAll");
         List<Datospeliculas> listPeliculas = queryDatospeliculasFindAll.getResultList();
         tablaPeliculasView.setItems(FXCollections.observableArrayList(listPeliculas));
     
     }
-
+    // Creamos el evento del raton para que cuando hagamos click, nos lleve al formulario de registro.
     @FXML
     private void addPeliculaClick(MouseEvent event) {
         try {
@@ -149,7 +150,9 @@ public class PeliculasViewController implements Initializable {
             Logger.getLogger(PeliculasViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    /* Igual que con el evento de añadir, con la peculiaridad de que cuando cliquemos sobre una pelicula, 
+    podamos seleccionar todos sus campos y pintarlos sobre el formulario para así editar. */
     @FXML
     private void editPeliculaClick(MouseEvent event) {
         if(peliculasSeleccionadas != null) {
@@ -172,13 +175,14 @@ public class PeliculasViewController implements Initializable {
                 Logger.getLogger(RegistroViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+            // Mensaje de alerta en el caso que demos click en editar y no hayamos seleccionado ninguna pelicula.
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Atención");
             alert.setHeaderText("Selecciona un registro para editar");
             alert.showAndWait();
         }
     }
-
+    // Evento para eliminar un registro de la base de datos seleccionado. con mensaje de confirmación.
     @FXML
     private void deletePeliculaClick(MouseEvent event) {
     if(peliculasSeleccionadas != null) {
@@ -209,7 +213,7 @@ public class PeliculasViewController implements Initializable {
             alert.showAndWait();
         }
     }
-
+    // Buscador de registros dentro de la base de datos.
     @FXML
     private void buscarPeliculaClick(MouseEvent event) {
     }
